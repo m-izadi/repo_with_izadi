@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  nexus-1:
+    container_name: nexus-1
+    hostname: nexus-1
+    image: sonatype/nexus3:3.56.0
+      #    image: sonatype/nexus3:3.54.1
+    restart: always
+      #    environment:
+      #      - INSTALL4J_ADD_VM_PARAMS="-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Djava.util.prefs.userRoot=/some-other-dir"
+    ports:
+      - 0.0.0.0:8080:8080
+      - 0.0.0.0:8081:8081
+      - 0.0.0.0:8082:8082
+      - 0.0.0.0:8083:8083
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /data/nexus/nexus-data:/nexus-data
+    cpus: 4
+    mem_limit: 4g
+      #    healthcheck:
+      #      test: curl -s http://localhost:8081/api/pub/status | grep Success
+        #      interval: 60s
+        #      timeout: 3s
+        #      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "1"   # number of files or file count
+        max-size: "300m" # file size
+
+          #    networks:
+          #      - kvsh-overlay
+          #networks:
+          #  kvsh-overlay:
+          #    name: kvsh-overlay
+          #    driver: overlay
+          #    attachable: true
+
+  nexus-nginx:
+    image: repo-nexus.kavosh.org:8080/nginx:stable-bullseye
+    container_name: nexus-nginx
+    restart: unless-stopped
+    ports:
+      - 8888:8888
+      - 8889:8889
+      - 80:80
+      - 443:443
+    volumes:
+      - /data/nexus/nginx-conf/conf.d/nexus.conf:/etc/nginx/conf.d/nexus.conf
+      - /data/nexus/ssl:/ssl/
+      - /data/nexus/certs:/etc/ssl/certs
