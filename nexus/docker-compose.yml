@@ -39,7 +39,8 @@ services:
           #    attachable: true
 
   nexus-nginx:
-    image: repo-nexus.kavosh.org:8080/nginx:stable-bullseye
+    image: repo-nexus.kavosh.org:8080/nginx:bookworm
+    #image: repo-nexus.kavosh.org:8080/nginx:stable-bullseye
     container_name: nexus-nginx
     restart: unless-stopped
     ports:
