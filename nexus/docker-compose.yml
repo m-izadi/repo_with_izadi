@@ -4,7 +4,7 @@ services:
   nexus-1:
     container_name: nexus-1
     hostname: nexus-1
-    image: repo-nexus.kavosh.org:8080/sonatype/nexus3:3.67.0
+    image: repo-nexus.kavosh.org:8084/sonatype/nexus3:3.67.1
     restart: always
       #    environment:
       #      - INSTALL4J_ADD_VM_PARAMS="-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Djava.util.prefs.userRoot=/some-other-dir"
@@ -13,6 +13,13 @@ services:
       - 0.0.0.0:8081:8081
       - 0.0.0.0:8082:8082
       - 0.0.0.0:8083:8083
+      - 0.0.0.0:8084:8084
+      - 0.0.0.0:8085:8085
+      - 0.0.0.0:8086:8086
+      - 0.0.0.0:8087:8087
+      - 0.0.0.0:8088:8088
+      - 0.0.0.0:8089:8089
+      - 0.0.0.0:8090:8090
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
