@@ -4,7 +4,7 @@ services:
   nexus-1:
     container_name: nexus-1
     hostname: nexus-1
-    image: repo-nexus.kavosh.org:8084/sonatype/nexus3:3.67.1
+    image: repo-nexus.kavosh.org:8110/sonatype/nexus3:3.67.1
     restart: always
       #    environment:
       #      - INSTALL4J_ADD_VM_PARAMS="-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Djava.util.prefs.userRoot=/some-other-dir"
@@ -12,14 +12,21 @@ services:
       - 0.0.0.0:8080:8080
       - 0.0.0.0:8081:8081
       - 0.0.0.0:8082:8082
-      - 0.0.0.0:8083:8083
-      - 0.0.0.0:8084:8084
-      - 0.0.0.0:8085:8085
-      - 0.0.0.0:8086:8086
-      - 0.0.0.0:8087:8087
-      - 0.0.0.0:8088:8088
-      - 0.0.0.0:8089:8089
-      - 0.0.0.0:8090:8090
+      - 0.0.0.0:8101:8101 # Docker DE Host
+      - 0.0.0.0:8102:8102 # Docker DE Group
+      
+      - 0.0.0.0:8111:8111 # Docker DEVOPS Host
+      - 0.0.0.0:8112:8112 # Docker DEVOPS Group
+
+      - 0.0.0.0:8121:8121 # Docker DS Host
+      - 0.0.0.0:8122:8122 # Docker DS Group
+
+      - 0.0.0.0:8131:8131 # Docker SE Host
+      - 0.0.0.0:8132:8132 # Docker SE Group
+
+      # - 0.0.0.0:8141:8141 ##Docker Reseve Host
+      # - 0.0.0.0:8142:8142 ##Docker Reseve Group
+
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
@@ -46,13 +53,18 @@ services:
           #    attachable: true
 
   nexus-nginx:
-    image: repo-nexus.kavosh.org:8080/nginx:bookworm
+    image: repo-nexus.kavosh.org:8110/nginx:bookworm
     #image: repo-nexus.kavosh.org:8080/nginx:stable-bullseye
     container_name: nexus-nginx
     restart: unless-stopped
     ports:
       - 8888:8888
       - 8889:8889
+      - 8091:8091
+      - 8100:8100 # Docker DE Group
+      - 8110:8110 # Docker DEVOPS Group
+      - 8120:8120 # Docker DS Group
+      - 8130:8130 # Docker SE Group
       - 80:80
       - 443:443
     volumes:
