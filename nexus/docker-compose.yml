@@ -4,7 +4,7 @@ services:
   nexus-1:
     container_name: nexus-1
     hostname: nexus-1
-    image: repo-nexus.kavosh.org:8110/sonatype/nexus3:3.68.0
+    image: repo-nexus.kavosh.org:8110/sonatype/nexus3:3.69.0
     restart: always
       #    environment:
       #      - INSTALL4J_ADD_VM_PARAMS="-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Djava.util.prefs.userRoot=/some-other-dir"
@@ -27,6 +27,8 @@ services:
       # - 0.0.0.0:8141:8141 ##Docker Reseve Host
       # - 0.0.0.0:8142:8142 ##Docker Reseve Group
 
+      - 0.0.0.0:8191:8191 # Docker arman Host
+      # - 0.0.0.0:8192:8192 ##Docker Reseve Group
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
@@ -65,6 +67,7 @@ services:
       - 8110:8110 # Docker DEVOPS Group
       - 8120:8120 # Docker DS Group
       - 8130:8130 # Docker SE Group
+      - 8190:8190 # Docker arman Group
       - 80:80
       - 443:443
     volumes:
