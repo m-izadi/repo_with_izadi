@@ -1,7 +1,5 @@
 SSL
 
-
-
 openssl pkcs12 -in kavosh2027.pfx -nocerts -nodes -out kvsh2027.key -legacy
 openssl pkcs12 -in kavosh2027.pfx -clcerts -nokeys -out server2027.crt  -legacy
 openssl pkcs12 -in kavosh2027.pfx -cacerts -nokeys -out ca-chain2027.crt    -legacy
@@ -38,6 +36,22 @@ sudo cp kvsh2027.crt kvsh2027.crt.leaf-only.bak
 
 cat kvsh2027.crt.leaf-only.bak certum-kvsh2027.pem \
   | sudo tee kvsh2027.crt >/dev/null
+
+
+
+* ------------------------------------------
+
+scp -P22 /data/Project/repo_with_izadi/Cert/kvsh2027.crt \
+  ubuntu@repo-nexus.kavosh.org:~/cert-kvsh2027/kvsh2027.crt
+
+grep -c 'BEGIN CERTIFICATE' ~/cert-kvsh2027/kvsh2027.crt   # باید 2 باشد
+
+sudo cp /data/nexus/certs/kvsh.crt /data/nexus/certs/kvsh.crt.bak
+sudo cp ~/cert-kvsh2027/kvsh2027.crt /data/nexus/certs/kvsh.crt
+sudo chmod 644 /data/nexus/certs/kvsh.crt
+
+docker exec nexus-nginx nginx -t && docker exec nexus-nginx nginx -s reload
+
 
 
 8gY3NTPW
