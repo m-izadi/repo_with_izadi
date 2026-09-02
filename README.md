@@ -24,4 +24,20 @@ sudo cp kvsh.crt kvsh.key /data/nexus/certs/
 sudo chmod 644 /data/nexus/certs/kvsh.crt
 sudo chmod 600 /data/nexus/certs/kvsh.key
 
+curl --proxy proxy-gr-p2.kavosh.org:27 -fsSL -o certum-kvsh2027.cer \ 
+  http://certumdvtlsg2r39ca.repository.certum.pl/certumdvtlsg2r39ca.cer
+
+openssl x509 -in /tmp/certum-kvsh2027.cer -inform DER \
+  -out certum-kvsh2027.pem
+
+openssl x509 -in certum-kvsh2027.pem -noout -subject -issuer
+
+sudo cp /data/nexus/certs/kvsh2027.crt /data/nexus/certs/kvsh2027.crt.leaf-only.bak
+sudo cp kvsh2027.crt kvsh2027.crt.leaf-only.bak
+
+
+cat kvsh2027.crt.leaf-only.bak certum-kvsh2027.pem \
+  | sudo tee kvsh2027.crt >/dev/null
+
+
 8gY3NTPW
