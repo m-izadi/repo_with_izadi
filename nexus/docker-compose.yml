@@ -66,6 +66,7 @@ services:
       - 8888:8888
       - 8889:8889
       - 8091:8091
+      - 8083:8083 # Docker PUSH ssl
       - 8100:8100 # Docker DE Group
       - 8110:8110 # Docker DEVOPS Group
       - 8120:8120 # Docker DS Group
